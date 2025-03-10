@@ -20,30 +20,17 @@ public class WebSocketEventListener {
 
     private final SimpMessageSendingOperations messagingTemplate;
 
-    private enum CONNECTION_TYPE {
-        DISCONNECTED,
-        CONNECTED,
-    }
-
     @EventListener
-    public void handleWebSocketDisconnectListener(SessionDisconnectEvent disconnectEvent) {
-        handleConnection(disconnectEvent, CONNECTION_TYPE.DISCONNECTED);
-    }
-
-    @EventListener
-    public void handleWebSocketConnectListenerS(SessionConnectedEvent connectedEvent) {
-        handleConnection(connectedEvent, CONNECTION_TYPE.CONNECTED);
-    }
-
-    private void handleConnection(AbstractSubProtocolEvent event, CONNECTION_TYPE connectionType) {
+    public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
         String username = (String) Objects.requireNonNull(headerAccessor.getSessionAttributes()).get("username");
         if ( username != null ) {
-            log.info("{} {}", username, connectionType);
+            log.info("{} disconnected", username);
             Player player = Player.builder()
                     .username(username)
                     .build();
             messagingTemplate.convertAndSend("/topic/public", player);
         }
     }
+
 }
