@@ -33,4 +33,9 @@ public class WebSocketEventListener {
         }
     }
 
+    @EventListener
+    public void handleWebSocketConnectionListener(SessionConnectedEvent connectedEvent) {
+        log.info("User connected");
+    }
+
 }
