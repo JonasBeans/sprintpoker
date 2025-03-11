@@ -1,7 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {WebSocketService} from '../../../services/web-socket.service';
 import {Player} from '../../model/Player';
-import {Router} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 
 @Component({
@@ -16,14 +15,10 @@ import {FormsModule} from '@angular/forms';
 export class WelcomePageComponent {
 
 	private _webSocketService: WebSocketService = inject(WebSocketService);
-	player?: Player;
-
-	constructor(private router: Router) {
-	}
+	player: Player = {username: ''};
 
 	public connectPlayer() :void {
 		this._webSocketService.connect(this.player);
-		//this.router.navigate(['/lobby'])
 	}
 
 	public disconnectPlayer() : void {

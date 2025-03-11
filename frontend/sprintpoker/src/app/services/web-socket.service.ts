@@ -10,13 +10,13 @@ export class WebSocketService {
 
 	socketClient: Stomp.Client | undefined;
 
-	public connect(player?: Player): void {
+	public connect(player: Player): void {
 		let ws = new SockJS('http://localhost:8080/ws');
 		this.socketClient = Stomp.over(ws);
 		this.socketClient.connect({}, this.onConnected(player), this.onError());
 	}
 
-	private onConnected(player?: Player) {
+	private onConnected(player: Player) {
 		return () => {
 			console.log("Connected to STOMP server");
 
@@ -29,7 +29,7 @@ export class WebSocketService {
 			this.socketClient?.send(
 				"/app/player.playerJoined", // Correct STOMP endpoint
 				{},
-				JSON.stringify({username: player?.username}) // Proper JSON formatting
+				JSON.stringify({username: player.username}) // Proper JSON formatting
 			);
 		}
 	}

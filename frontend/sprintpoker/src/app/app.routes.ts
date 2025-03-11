@@ -4,5 +4,5 @@ import {WelcomePageComponent} from './modules/component/welcome-page/welcome-pag
 
 export const routes: Routes = [
 	{path: 'lobby', component: LobbyComponent},
-	{path: '', component: WelcomePageComponent}
+	{path: '', component: LobbyComponent}
 ];

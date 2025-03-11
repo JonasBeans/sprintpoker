@@ -29,7 +29,7 @@ public class WebSocketEventListener {
             Player player = Player.builder()
                     .username(username)
                     .build();
-            messagingTemplate.convertAndSend("/topic/public", player);
+            messagingTemplate.convertAndSend("/topic/public", String.format("%s disconnected", username));
         } else {
             log.info("Unknown disconnected");
             Player player = Player.builder()
