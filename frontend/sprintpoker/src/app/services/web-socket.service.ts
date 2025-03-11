@@ -8,28 +8,40 @@ import {Player} from '../modules/model/Player';
 })
 export class WebSocketService {
 
-	socketClient: Stomp.Client;
+	socketClient: Stomp.Client | undefined;
 
-	constructor() {
+	public connect(player?: Player): void {
 		let ws = new SockJS('http://localhost:8080/ws');
 		this.socketClient = Stomp.over(ws);
+		this.socketClient.connect({}, this.onConnected(player), this.onError());
 	}
 
-	public connect(player?:Player) : void {
-		this.socketClient.connect({}, this.onConnect, this.onError);
-		this.socketClient.send(
-			'/api/player.playerJoined',
-			{},
-			JSON.stringify(player)
-		)
+	private onConnected(player?: Player) {
+		return () => {
+			console.log("Connected to STOMP server");
+
+			// Subscribe to a topic and handle incoming messages
+			this.socketClient?.subscribe('/topic/public', (message) => {
+				console.log("Received:", message.body);
+			});
+
+			// Send a message to the correct STOMP destination
+			this.socketClient?.send(
+				"/app/player.playerJoined", // Correct STOMP endpoint
+				{},
+				JSON.stringify({username: player?.username}) // Proper JSON formatting
+			);
+		}
 	}
 
-	private onConnect() {
-		this.socketClient.subscribe('/topic/public')
-		this.socketClient.send('')
+	disconnect() {
+		this.socketClient?.disconnect(() => {console.log("Disconnect")}, {"username":"Jonas"})
 	}
 
 	private onError() {
-		console.log("Error while connecting with server over WebSocket")
+		return () => {
+			console.log("Error while connecting with server over WebSocket")
+		}
 	}
+
 }

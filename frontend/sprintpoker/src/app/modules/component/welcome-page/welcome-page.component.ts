@@ -16,15 +16,18 @@ import {FormsModule} from '@angular/forms';
 export class WelcomePageComponent {
 
 	private _webSocketService: WebSocketService = inject(WebSocketService);
-	player: Player;
+	player?: Player;
 
 	constructor(private router: Router) {
-		this.player = {username: ''}
 	}
 
 	public connectPlayer() :void {
 		this._webSocketService.connect(this.player);
-		this.router.navigate(['/lobby'])
+		//this.router.navigate(['/lobby'])
+	}
+
+	public disconnectPlayer() : void {
+		this._webSocketService.disconnect();
 	}
 
 }

@@ -30,6 +30,12 @@ public class WebSocketEventListener {
                     .username(username)
                     .build();
             messagingTemplate.convertAndSend("/topic/public", player);
+        } else {
+            log.info("Unknown disconnected");
+            Player player = Player.builder()
+                    .username("Unknown")
+                    .build();
+            messagingTemplate.convertAndSend("/topic/public", player);
         }
     }
 
