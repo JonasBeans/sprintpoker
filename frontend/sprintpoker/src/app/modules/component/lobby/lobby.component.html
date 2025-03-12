@@ -1,2 +1,8 @@
 <h1>Lobby</h1>
+<h2>Active players</h2>
+<ul>
+	<li *ngFor="let player of _playerService.activePlayers">
+		{{player.username}}
+	</li>
+</ul>
 <app-welcome-page></app-welcome-page>

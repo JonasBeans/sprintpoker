@@ -1,12 +1,15 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {WelcomePageComponent} from '../welcome-page/welcome-page.component';
+import {PlayerService as _playerService} from '../../../services/player/player.service'
+import {NgForOf} from '@angular/common';
 
 @Component({
 	selector: 'app-lobby',
 	imports: [
 		FormsModule,
-		WelcomePageComponent
+		WelcomePageComponent,
+		NgForOf
 	],
 	templateUrl: './lobby.component.html',
 	standalone: true,
@@ -14,5 +17,6 @@ import {WelcomePageComponent} from '../welcome-page/welcome-page.component';
 })
 export class LobbyComponent {
 
+	protected readonly _playerService = _playerService;
 
 }

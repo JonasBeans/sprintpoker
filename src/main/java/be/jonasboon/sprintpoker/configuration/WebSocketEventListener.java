@@ -1,13 +1,12 @@
 package be.jonasboon.sprintpoker.configuration;
 
-import be.jonasboon.sprintpoker.player.Player;
+import be.jonasboon.sprintpoker.player.model.Player;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
-import org.springframework.web.socket.messaging.AbstractSubProtocolEvent;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
@@ -29,7 +28,7 @@ public class WebSocketEventListener {
             Player player = Player.builder()
                     .username(username)
                     .build();
-            messagingTemplate.convertAndSend("/topic/public", String.format("%s disconnected", username));
+            messagingTemplate.convertAndSend("/topic/public", player);
         } else {
             log.info("Unknown disconnected");
             Player player = Player.builder()

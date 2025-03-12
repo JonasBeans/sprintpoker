@@ -1,4 +1,4 @@
-package be.jonasboon.sprintpoker.player;
+package be.jonasboon.sprintpoker.player.model;
 
 import lombok.Builder;
 import lombok.Getter;
