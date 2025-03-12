@@ -41,7 +41,8 @@ export class WebSocketService {
 	}
 
 	disconnect() {
-		this.socketClient?.disconnect(() => {console.log("Disconnect")}, {"username":"Jonas"})
+		this.socketClient?.disconnect(() => {console.log("Disconnect")})
+		PlayerService.activePlayers = [];
 	}
 
 	private onError() {

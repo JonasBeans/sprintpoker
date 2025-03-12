@@ -6,7 +6,7 @@ import {Player} from '../../modules/model/Player';
 })
 export class PlayerService {
 
-	public static activePlayers: Player[] = [{username: 'Jhonny Doe'}];
+	public static activePlayers: Player[] = [];
 
 	constructor() { }
 

@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
 import {WebSocketService} from '../../../services/web-socket.service';
 import {Player} from '../../model/Player';
 import {FormsModule} from '@angular/forms';
@@ -16,19 +16,23 @@ import {NgIf} from '@angular/common';
 })
 export class WelcomePageComponent {
 
+	@Input() isConnected!: boolean;
+	@Output() connectionEvent = new EventEmitter<boolean>();
+
 	private _webSocketService: WebSocketService = inject(WebSocketService);
 
 	player: Player = {username: ''};
-	isConnected = false;
 
 	public connectPlayer() :void {
 		this._webSocketService.connect(this.player);
 		this.isConnected = true;
+		this.connectionEvent.emit(this.isConnected);
 	}
 
 	public disconnectPlayer() : void {
 		this._webSocketService.disconnect();
 		this.isConnected = false;
+		this.connectionEvent.emit(this.isConnected);
 	}
 
 }
