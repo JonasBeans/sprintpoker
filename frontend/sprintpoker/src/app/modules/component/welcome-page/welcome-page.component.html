@@ -1,4 +1,5 @@
+
 <label for="username">insert username</label>
 <input type="text" id="username" [(ngModel)]="player.username" placeholder="">
-<button (click)="connectPlayer()" type="button">Connect</button>
-<button (click)="disconnectPlayer()" type="button">Disconnect</button>
+<button (click)="connectPlayer()" *ngIf="!isConnected" type="button">Connect</button>
+<button (click)="disconnectPlayer()" *ngIf="isConnected" type="button">Disconnect</button>

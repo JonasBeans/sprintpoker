@@ -1,6 +1,7 @@
 package be.jonasboon.sprintpoker.configuration;
 
 import be.jonasboon.sprintpoker.player.model.Player;
+import be.jonasboon.sprintpoker.player.service.PlayerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -18,24 +19,19 @@ import java.util.Objects;
 public class WebSocketEventListener {
 
     private final SimpMessageSendingOperations messagingTemplate;
+    private final PlayerService playerService;
 
     @EventListener
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
         String username = (String) Objects.requireNonNull(headerAccessor.getSessionAttributes()).get("username");
-        if ( username != null ) {
-            log.info("{} disconnected", username);
-            Player player = Player.builder()
-                    .username(username)
-                    .build();
-            messagingTemplate.convertAndSend("/topic/public", player);
-        } else {
-            log.info("Unknown disconnected");
-            Player player = Player.builder()
-                    .username("Unknown")
-                    .build();
-            messagingTemplate.convertAndSend("/topic/public", player);
-        }
+
+        if ( Objects.isNull(username) )  throw new RuntimeException("Unknown player tried to disconnect");
+        if ( event.getSessionId().isEmpty() )  throw new RuntimeException("Unknown player tried to disconnect");
+
+        messagingTemplate.convertAndSend("/topic/players.Updates", playerService.playerLeft(username, event.getSessionId()));
+
+        log.info("{} disconnected successfully", username);
     }
 
     @EventListener
