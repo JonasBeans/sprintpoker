@@ -3,6 +3,7 @@ import {FormsModule} from '@angular/forms';
 import {WelcomePageComponent} from '../welcome-page/welcome-page.component';
 import {PlayerService as _playerService} from '../../../services/player/player.service'
 import {NgForOf, NgIf} from '@angular/common';
+import {EstimationComponent} from '../estimation/estimation.component';
 
 @Component({
 	selector: 'app-lobby',
@@ -10,11 +11,12 @@ import {NgForOf, NgIf} from '@angular/common';
 		FormsModule,
 		WelcomePageComponent,
 		NgForOf,
-		NgIf
+		NgIf,
+		EstimationComponent
 	],
 	templateUrl: './lobby.component.html',
 	standalone: true,
-	styleUrl: './lobby.component.css'
+	styleUrl: './lobby.component.scss'
 })
 export class LobbyComponent {
 

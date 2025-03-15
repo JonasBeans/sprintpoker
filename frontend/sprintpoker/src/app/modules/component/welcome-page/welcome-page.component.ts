@@ -12,7 +12,7 @@ import {NgIf} from '@angular/common';
 	],
 	templateUrl: './welcome-page.component.html',
 	standalone: true,
-	styleUrl: './welcome-page.component.css'
+	styleUrl: './welcome-page.component.scss'
 })
 export class WelcomePageComponent {
 

@@ -1,20 +1,23 @@
 <h1>Lobby</h1>
-<div style="border-style: solid;border-color: black; padding:10px;width: 200px;margin:10px">
-	<p>Status:</p>
-	<div *ngIf="!isConnected">
-		<p style="color:red">NOT CONNECTED YET</p>
+<div class="row border border-2">
+	<div class="col-2">
+		<p>Status:</p>
+		<div *ngIf="!isConnected">
+			<p class="text-danger">NOT CONNECTED YET</p>
+		</div>
+		<div *ngIf="isConnected">
+			<p class="text-success">CONNECTED</p>
+		</div>
 	</div>
-	<div *ngIf="isConnected">
-		<p style="color:green">CONNECTED</p>
+	<div class="col-3 ms-3" *ngIf="isConnected">
+		<p>Active players</p>
+		<ul>
+			<li *ngFor="let player of _playerService.activePlayers">
+				<i class="bi bi-person"> {{player.username}} </i>
+			</li>
+		</ul>
 	</div>
-</div>
-<div *ngIf="isConnected" style="margin: 10px">
-	<h2 >Active players</h2>
-	<ul>
-		<li *ngFor="let player of _playerService.activePlayers">
-			{{player.username}}
-		</li>
-	</ul>
 </div>
 
 <app-welcome-page [isConnected]="isConnected" (connectionEvent)="isConnected=$event"></app-welcome-page>
+<app-estimation></app-estimation>

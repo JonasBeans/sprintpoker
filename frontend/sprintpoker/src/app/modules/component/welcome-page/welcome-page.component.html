@@ -1,8 +1,12 @@
-
-<label for="username">Insert username</label>
-<input type="text" id="username" [(ngModel)]="player.username" placeholder="">
-
-<p *ngIf="isConnected">Your username: {{player.username}}</p>
-<button (click)="connectPlayer()" *ngIf="!isConnected" type="button">Connect</button>
-<button (click)="disconnectPlayer()" *ngIf="isConnected" type="button">Disconnect</button>
-
+<div class="input-group mb-3">
+	<input type="text" id="username" [(ngModel)]="player.username"
+		   placeholder="Username" aria-label="Username" class="input-group-text" [disabled]="isConnected">
+</div>
+<button (click)="connectPlayer()" *ngIf="!isConnected"
+		type="button" class="btn btn-success">
+	Connect
+</button>
+<button (click)="disconnectPlayer()" *ngIf="isConnected"
+		type="button" class="btn btn-danger">
+	Disconnect
+</button>
