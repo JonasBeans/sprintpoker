@@ -1,6 +1,6 @@
 import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
 import {WebSocketService} from '../../../services/web-socket.service';
-import {Player} from '../../model/Player';
+import {Player, PlayerStatus} from '../../model/Player';
 import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
 
@@ -21,7 +21,7 @@ export class WelcomePageComponent {
 
 	private _webSocketService: WebSocketService = inject(WebSocketService);
 
-	player: Player = {username: ''};
+	player: Player = {username: '', status: PlayerStatus.IS_ESTIMATING, estimation: 0};
 
 	public connectPlayer() :void {
 		this._webSocketService.connect(this.player);

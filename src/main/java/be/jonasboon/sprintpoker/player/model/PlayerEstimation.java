@@ -1,14 +1,11 @@
 package be.jonasboon.sprintpoker.player.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
-@Builder
 @ToString
+@Data
 public class PlayerEstimation {
-    private String estimation;
+    int estimation;
 }

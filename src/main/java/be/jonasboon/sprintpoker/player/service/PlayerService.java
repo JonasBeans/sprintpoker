@@ -27,11 +27,11 @@ public class PlayerService {
         return activePlayers.values().stream().toList();
     }
 
-    public String playerMadeEstimation(PlayerEstimation estimation, String username) {
-        String message = String.format("%s made estimation: %s", username, estimation);
-
-        log.info(message);
-
-        return message;
+    public List<Player> playerMadeEstimation(PlayerEstimation estimation, String username, String sessionId) {
+        log.info("{} made estimation: {}", username, estimation);
+        Player player = activePlayers.get(sessionId);
+        player.setEstimation(estimation.getEstimation());
+        player.setStatus(Player.PlayerStatus.MADE_ESTIMATION);
+        return activePlayers.values().stream().toList();
     }
 }

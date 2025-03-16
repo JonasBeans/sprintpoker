@@ -1,5 +1,5 @@
 <div class="row border border-2 py-1">
-	<div class="col-1 d-inline-flex">
+	<div class="col-2 d-inline-flex">
 		<p>Status:</p>
 		<div *ngIf="!isConnected">
 			<p class="badge text-bg-danger ms-1">NOT CONNECTED YET</p>
@@ -8,11 +8,25 @@
 			<p class="badge text-bg-success ms-1">CONNECTED</p>
 		</div>
 	</div>
-	<div class="col-3 ms-3" *ngIf="isConnected">
+	<div class="col-5 ms-3" *ngIf="isConnected">
 		<p>Active players</p>
 		<ul>
 			<li *ngFor="let player of _playerService.activePlayers">
-				<i class="bi bi-person"> {{ player.username }} </i>
+				<div class="d-inline-flex gap-1">
+					<i class="bi bi-person"></i>
+					@switch (player.status) {
+						@case (PlayerStatus.IS_ESTIMATING) {
+							<p class="badge text-bg-warning" >is estimating</p>
+						}
+						@case (PlayerStatus.MADE_ESTIMATION) {
+							<p class="badge text-bg-success">estimated</p>
+						}
+						@default {
+							<p class="badge text-bg-danger">not a valid state</p>
+						}
+					}
+					<p>{{ player.username }}</p>
+				</div>
 			</li>
 		</ul>
 	</div>

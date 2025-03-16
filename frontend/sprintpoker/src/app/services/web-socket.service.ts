@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
-import {Player} from '../modules/model/Player';
+import {Player, PlayerStatus} from '../modules/model/Player';
 import {PlayerService} from './player/player.service';
 
 @Injectable({
@@ -21,25 +21,21 @@ export class WebSocketService {
 		return () => {
 			console.log("Connected to STOMP server");
 
-			// Subscribe to a topic and handle incoming messages
-			this.socketClient?.subscribe('/topic/public', (message) => {
-				console.log("Received:", message.body);
-			});
-
 			this.socketClient?.subscribe('/topic/players.updates', (message) => {
 				let receivedPlayers: Player[] = JSON.parse(message.body);
 				PlayerService.activePlayers = [...receivedPlayers];
 			});
 
 			this.socketClient?.subscribe('/topic/players.estimationUpdates', (message) => {
-				console.log(message);
+				let receivedPlayers: Player[] = JSON.parse(message.body);
+				PlayerService.activePlayers = [...receivedPlayers];
 			});
 
 			// Send a message to the correct STOMP destination
 			this.socketClient?.send(
 				"/app/player.playerJoined", // Correct STOMP endpoint
 				{},
-				JSON.stringify({username: player.username}) // Proper JSON formatting
+				JSON.stringify({username: player.username, status: PlayerStatus.IS_ESTIMATING, estimation: 0}) // Proper JSON formatting
 			);
 		}
 	}

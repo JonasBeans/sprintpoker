@@ -30,9 +30,9 @@ public class PlayerController {
 
     @MessageMapping("/player.madeEstimation")
     @SendTo("/topic/players.estimationUpdates")
-    public String playerMadeEstimation(@Payload PlayerEstimation estimation, SimpMessageHeaderAccessor headerAccessor) {
+    public List<Player> playerMadeEstimation(@Payload PlayerEstimation estimation, SimpMessageHeaderAccessor headerAccessor) {
         String username = (String) Objects.requireNonNull(headerAccessor.getSessionAttributes()).get("username");
-        return playerService.playerMadeEstimation(estimation, username);
+        return playerService.playerMadeEstimation(estimation, username, headerAccessor.getSessionId());
     }
 
 }
