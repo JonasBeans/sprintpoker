@@ -29,7 +29,7 @@ public class WebSocketEventListener {
         if ( Objects.isNull(username) )  throw new RuntimeException("Unknown player tried to disconnect");
         if ( event.getSessionId().isEmpty() )  throw new RuntimeException("Unknown player tried to disconnect");
 
-        messagingTemplate.convertAndSend("/topic/players.Updates", playerService.playerLeft(username, event.getSessionId()));
+        messagingTemplate.convertAndSend("/topic/players.updates", playerService.playerLeft(username, event.getSessionId()));
 
         log.info("{} disconnected successfully", username);
     }
