@@ -1,6 +1,7 @@
 package be.jonasboon.sprintpoker.player.service;
 
 import be.jonasboon.sprintpoker.player.model.Player;
+import be.jonasboon.sprintpoker.player.model.PlayerEstimation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -26,4 +27,11 @@ public class PlayerService {
         return activePlayers.values().stream().toList();
     }
 
+    public String playerMadeEstimation(PlayerEstimation estimation, String username) {
+        String message = String.format("%s made estimation: %s", username, estimation);
+
+        log.info(message);
+
+        return message;
+    }
 }

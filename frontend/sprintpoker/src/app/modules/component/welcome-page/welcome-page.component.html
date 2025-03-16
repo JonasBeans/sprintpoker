@@ -1,12 +1,12 @@
-<div class="input-group mb-3">
+<div class="input-group my-3">
 	<input type="text" id="username" [(ngModel)]="player.username"
 		   placeholder="Username" aria-label="Username" class="input-group-text" [disabled]="isConnected">
+	<button (click)="connectPlayer()" *ngIf="!isConnected"
+			type="button" class="btn btn-success">
+		Connect
+	</button>
+	<button (click)="disconnectPlayer()" *ngIf="isConnected"
+			type="button" class="btn btn-danger">
+		Disconnect
+	</button>
 </div>
-<button (click)="connectPlayer()" *ngIf="!isConnected"
-		type="button" class="btn btn-success">
-	Connect
-</button>
-<button (click)="disconnectPlayer()" *ngIf="isConnected"
-		type="button" class="btn btn-danger">
-	Disconnect
-</button>

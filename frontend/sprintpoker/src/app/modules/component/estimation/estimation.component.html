@@ -1,2 +1,22 @@
-<p>estimation works!</p>
-<button class="btn btn-primary" for></button>
+<div class="my-3">
+	<div *ngFor="let fibonacciNumber of fibonacciSequence" class="d-inline-flex">
+		<button [ngClass]="determineButtonState(fibonacciNumber) ? 'btn-primary' : 'btn-dark'"
+				class="btn ms-1"
+				[disabled]="isEstimated"
+				(click)="chooseEstimate(fibonacciNumber)">
+			{{ fibonacciNumber }}
+		</button>
+	</div>
+</div>
+<div class="mt-3">
+	<button class="btn btn-success"
+			(click)="makeEstimation()">
+		Confirm
+	</button>
+	<button class="btn btn-primary"
+			(click)="resetChoice()">
+		RESET
+	</button>
+</div>
+
+

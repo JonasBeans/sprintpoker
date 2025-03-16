@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
 import {Player} from '../modules/model/Player';
@@ -26,9 +26,13 @@ export class WebSocketService {
 				console.log("Received:", message.body);
 			});
 
-			this.socketClient?.subscribe('/topic/players.Updates', (message) => {
+			this.socketClient?.subscribe('/topic/players.updates', (message) => {
 				let receivedPlayers: Player[] = JSON.parse(message.body);
 				PlayerService.activePlayers = [...receivedPlayers];
+			});
+
+			this.socketClient?.subscribe('/topic/players.estimationUpdates', (message) => {
+				console.log(message);
 			});
 
 			// Send a message to the correct STOMP destination
@@ -38,6 +42,14 @@ export class WebSocketService {
 				JSON.stringify({username: player.username}) // Proper JSON formatting
 			);
 		}
+	}
+
+	sendEstimationMessage(estimation?: number) {
+		this.socketClient?.send(
+			"/app/player.madeEstimation",
+			{},
+			JSON.stringify({estimation: estimation})
+		)
 	}
 
 	disconnect() {
