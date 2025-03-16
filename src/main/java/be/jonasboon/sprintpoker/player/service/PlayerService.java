@@ -34,4 +34,12 @@ public class PlayerService {
         player.setStatus(Player.PlayerStatus.MADE_ESTIMATION);
         return activePlayers.values().stream().toList();
     }
+
+    public List<Player> resetEstimation(String username, String sessionId) {
+        log.info("{} reset estimation", username);
+        Player player = activePlayers.get(sessionId);
+        player.setEstimation(0);
+        player.setStatus(Player.PlayerStatus.IS_ESTIMATING);
+        return activePlayers.values().stream().toList();
+    }
 }

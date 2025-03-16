@@ -48,6 +48,12 @@ export class WebSocketService {
 		)
 	}
 
+	sendEstimationResetMessage() {
+		this.socketClient?.send(
+			"/app/player.resetEstimation"
+		)
+	}
+
 	disconnect() {
 		this.socketClient?.disconnect(() => {console.log("Disconnect")})
 		PlayerService.activePlayers = [];

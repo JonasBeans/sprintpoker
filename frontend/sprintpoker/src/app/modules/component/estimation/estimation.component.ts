@@ -28,6 +28,7 @@ export class EstimationComponent {
 	resetChoice() {
 		this.isEstimated = false;
 		this.chosenNumber = undefined;
+		this._websocketService.sendEstimationResetMessage();
 	};
 
 	determineButtonState(fibonacciNumber: number): boolean {
