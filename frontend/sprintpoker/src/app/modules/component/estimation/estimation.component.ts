@@ -2,6 +2,7 @@ import {Component, inject} from '@angular/core';
 import {NgClass, NgForOf, NgIf} from '@angular/common';
 import {Fibonacci} from './fibonacci';
 import {WebSocketService} from '../../../services/web-socket.service';
+import {PlayerService} from '../../../services/player/player.service';
 
 @Component({
 	selector: 'app-estimation',
@@ -15,10 +16,12 @@ import {WebSocketService} from '../../../services/web-socket.service';
 })
 export class EstimationComponent {
 
+	_websocketService: WebSocketService = inject(WebSocketService);
+	protected readonly PlayerService = PlayerService;
+
 	fibonacciSequence: number[] = Fibonacci.getSequence(10);
 	isEstimated: boolean = false;
 	chosenNumber?: number = undefined;
-	_websocketService: WebSocketService = inject(WebSocketService);
 
 	chooseEstimate(fibonacciNumber: number) {
 		this.chosenNumber = fibonacciNumber;
@@ -26,6 +29,7 @@ export class EstimationComponent {
 	}
 
 	resetChoice() {
+		console.info("reset")
 		this.isEstimated = false;
 		this.chosenNumber = undefined;
 		this._websocketService.sendEstimationResetMessage();
@@ -37,7 +41,9 @@ export class EstimationComponent {
 	}
 
 	makeEstimation() {
+		console.info("confirm")
 		this._websocketService.sendEstimationMessage(this.chosenNumber);
 	}
+
 }
 

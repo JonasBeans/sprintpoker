@@ -7,6 +7,7 @@ import {Player} from '../../modules/model/Player';
 export class PlayerService {
 
 	public static activePlayers: Player[] = [];
+	public static isRevealable: boolean = false;
 
 	constructor() { }
 

@@ -31,6 +31,10 @@ export class WebSocketService {
 				PlayerService.activePlayers = [...receivedPlayers];
 			});
 
+			this.socketClient?.subscribe('/topic/estimation.isRevealable', (message) => {
+				PlayerService.isRevealable = JSON.parse(message.body);
+			})
+
 			// Send a message to the correct STOMP destination
 			this.socketClient?.send(
 				"/app/player.playerJoined", // Correct STOMP endpoint

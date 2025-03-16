@@ -14,15 +14,22 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PlayerService {
 
     private final Map<String, Player> activePlayers = new ConcurrentHashMap<>();
+    private final PlayersStatusManager playersStatusManager;
+
+    public PlayerService(PlayersStatusManager playersStatusManager) {
+        this.playersStatusManager = playersStatusManager;
+    }
 
     public List<Player> playerJoined(Player player, String sessionId) {
         log.info("{} joined", player);
+        playersStatusManager.addPlayer(player);
         activePlayers.put(sessionId, player);
         return activePlayers.values().stream().toList();
     }
 
     public List<Player> playerLeft(String username, String sessionId) {
         log.info("{} left", username);
+        playersStatusManager.removePlayer(activePlayers.get(sessionId));
         activePlayers.remove(sessionId);
         return activePlayers.values().stream().toList();
     }
@@ -32,6 +39,7 @@ public class PlayerService {
         Player player = activePlayers.get(sessionId);
         player.setEstimation(estimation.getEstimation());
         player.setStatus(Player.PlayerStatus.MADE_ESTIMATION);
+        playersStatusManager.movePlayerReady(player);
         return activePlayers.values().stream().toList();
     }
 
@@ -40,6 +48,8 @@ public class PlayerService {
         Player player = activePlayers.get(sessionId);
         player.setEstimation(0);
         player.setStatus(Player.PlayerStatus.IS_ESTIMATING);
+        playersStatusManager.movePlayerUnready(player);
         return activePlayers.values().stream().toList();
     }
+
 }
