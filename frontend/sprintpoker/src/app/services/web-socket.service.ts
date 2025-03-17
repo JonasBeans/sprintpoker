@@ -3,6 +3,8 @@ import SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
 import {Player, PlayerStatus} from '../modules/model/Player';
 import {PlayerService} from './player/player.service';
+// @ts-ignore
+import {environment} from '../../environments/environments'
 
 @Injectable({
 	providedIn: 'root'
@@ -12,7 +14,7 @@ export class WebSocketService {
 	socketClient: Stomp.Client | undefined;
 
 	public connect(player: Player): void {
-		let ws = new SockJS('http://localhost:8080/ws');
+		let ws = new SockJS(`${environment.host}/ws`);
 		this.socketClient = Stomp.over(ws);
 		this.socketClient.connect({}, this.onConnected(player) , this.onError());
 	}
