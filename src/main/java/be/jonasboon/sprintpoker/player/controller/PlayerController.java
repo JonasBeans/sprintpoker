@@ -3,9 +3,7 @@ package be.jonasboon.sprintpoker.player.controller;
 import be.jonasboon.sprintpoker.player.model.Player;
 import be.jonasboon.sprintpoker.player.model.PlayerEstimation;
 import be.jonasboon.sprintpoker.player.service.PlayerService;
-import be.jonasboon.sprintpoker.player.service.PlayersStatusManager;
 import lombok.AllArgsConstructor;
-import org.springframework.context.event.EventListener;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -20,7 +18,6 @@ import java.util.Objects;
 public class PlayerController {
 
     private PlayerService playerService;
-    private PlayersStatusManager playersStatusManager;
 
     @MessageMapping("/player.playerJoined")
     @SendTo("/topic/players.updates")
