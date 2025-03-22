@@ -7,19 +7,21 @@ on:
         description: 'Set docker image version'
         required: true
         type: string
-jobs:
 
+jobs:
   build_image:
-    name: Build docker image
+    name: Build and Push Docker Image
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag javabeans/sprintpoker:${{ inputs.version }}
-    - if: success()
-    - uses: manusa/actions-publish-docker@v1.1.21
-    - with:
-        name: javabeans/sprintpoker:${{ inputs.version }}
-        username: ${{ secrets.DOCKER_HUB_USER }}
-        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USER }}" --password-stdin
+
+      - name: Build Docker Image
+        run: docker build . --file Dockerfile --tag javabeans/sprintpoker:${{ inputs.version }}
+
+      - name: Push Docker Image
+        run: docker push javabeans/sprintpoker:${{ inputs.version }}
