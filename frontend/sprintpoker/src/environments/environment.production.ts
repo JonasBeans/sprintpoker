@@ -1,4 +1,4 @@
 export const environment = {
 	production: true,
-	host: 'http://bytesbyboon.be:8080'
+	host: 'https://bytesbyboon.be:8080'
 }
