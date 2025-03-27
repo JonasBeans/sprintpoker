@@ -1,14 +1,17 @@
 <div class="row border border-2 py-1">
-	<div class="col-2 d-inline-flex">
-		<p>Status:</p>
-		<div *ngIf="!isConnected">
-			<p class="badge text-bg-danger ms-1">NOT CONNECTED YET</p>
-		</div>
-		<div *ngIf="isConnected">
-			<p class="badge text-bg-success ms-1">CONNECTED</p>
+	<div class="col-9">
+		<app-welcome-page [isConnected]="isConnected" (connectionEvent)="isConnected=$event"></app-welcome-page>
+		<div class="col-2 d-inline-flex">
+			<p>Status:</p>
+			<div *ngIf="!isConnected">
+				<p class="badge text-bg-danger ms-1">NOT CONNECTED YET</p>
+			</div>
+			<div *ngIf="isConnected">
+				<p class="badge text-bg-success ms-1">CONNECTED</p>
+			</div>
 		</div>
 	</div>
-	<div class="col-5 ms-3" *ngIf="isConnected">
+	<div class="col-1 ms-3" *ngIf="isConnected">
 		<p>Active players</p>
 		<ul>
 			<li *ngFor="let player of _playerService.activePlayers">
@@ -32,5 +35,7 @@
 	</div>
 </div>
 
-<app-welcome-page [isConnected]="isConnected" (connectionEvent)="isConnected=$event"></app-welcome-page>
-<app-estimation></app-estimation>
+
+<div class="d-flex justify-content-center">
+	<app-estimation></app-estimation>
+</div>
